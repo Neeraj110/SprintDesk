@@ -8,17 +8,29 @@ export interface RawMockData {
   notifications: AppNotification[];
 }
 
+import fallbackMockData from "../../../public/mock-data.json";
+
 let cachedData: RawMockData | null = null;
 
 export const fetchInitialMockData = async (): Promise<RawMockData> => {
   if (cachedData) return cachedData;
-  const res = await fetch("/mock-data.json");
-  if (!res.ok) {
-    throw new Error(`Failed to fetch mock data: ${res.statusText}`);
+  try {
+    const res = await fetch("/mock-data.json");
+    if (!res.ok) {
+      throw new Error(`Failed to fetch mock data: ${res.status} ${res.statusText}`);
+    }
+    const contentType = res.headers.get("content-type");
+    if (contentType && contentType.includes("text/html")) {
+      throw new Error("Received HTML response instead of JSON");
+    }
+    const data: RawMockData = await res.json();
+    cachedData = data;
+    return data;
+  } catch (err) {
+    console.warn("Network fetch for /mock-data.json failed or returned non-JSON. Using embedded static fallback data.", err);
+    cachedData = fallbackMockData as RawMockData;
+    return cachedData;
   }
-  const data: RawMockData = await res.json();
-  cachedData = data;
-  return data;
 };
 
 export const getUsers = async (): Promise<User[]> => {
