@@ -8,7 +8,7 @@ export interface RawMockData {
   notifications: AppNotification[];
 }
 
-import fallbackMockData from "../../../public/mock-data.json";
+import fallbackMockData from "../../data/mock-data.json";
 
 let cachedData: RawMockData | null = null;
 

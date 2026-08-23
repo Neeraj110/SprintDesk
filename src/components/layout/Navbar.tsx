@@ -34,7 +34,7 @@ export const Navbar: React.FC = () => {
         {/* Brand & Navigation */}
         <div className="flex items-center gap-8">
           <div
-            onClick={() => navigate("/dashboard")}
+            onClick={() => navigate("/")}
             className="flex items-center gap-2 cursor-pointer group"
           >
             <div className="w-8 h-8 rounded-lg bg-slate-900 dark:bg-slate-800 border border-slate-800 dark:border-slate-700 flex items-center justify-center text-white dark:text-slate-200 transition-colors">

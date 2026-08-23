@@ -7,6 +7,9 @@ import { AuthenticatedLayout } from "./components/layout/AuthenticatedLayout";
 import { useSessionBootstrap } from "./hooks/useSessionBootstrap";
 
 // Route-level code splitting (Task 06 requirement).
+const LandingPage = lazy(() =>
+  import("./pages/LandingPage").then((m) => ({ default: m.LandingPage }))
+);
 const LoginPage = lazy(() =>
   import("./features/auth/LoginPage").then((m) => ({ default: m.LoginPage }))
 );
@@ -28,6 +31,9 @@ function App() {
       <BrowserRouter>
         <Suspense fallback={<FullScreenLoader />}>
           <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/landing" element={<LandingPage />} />
+
             <Route element={<PublicOnlyRoute />}>
               <Route path="/login" element={<LoginPage />} />
             </Route>
@@ -40,8 +46,7 @@ function App() {
               </Route>
             </Route>
 
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Suspense>
       </BrowserRouter>
