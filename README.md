@@ -122,13 +122,3 @@ src/
 
 ---
 
-## ⚡ Technical Decisions & Tradeoffs
-
-1. **Why `@dnd-kit/core` instead of `react-beautiful-dnd`?**  
-   `react-beautiful-dnd` is deprecated and incompatible with React 18/19 strict mode. `@dnd-kit/core` provides superior accessibility (keyboard sensors), collision detection algorithms, and smooth performance without DOM mutations.
-
-2. **Why Recharts for Visualizations?**  
-   Recharts provides composable SVG charts that adapt dynamically to responsive container sizes (including 375px mobile viewports) with built-in hover tooltips and smooth entrance animations.
-
-3. **Why Custom Component Library from Scratch?**  
-   Adhering to assignment constraints prohibiting external UI kits (MUI, Shadcn, Chakra), every UI element (Buttons, Modals, Toasts, Inputs, Selects, Skeletons, DataTables) was engineered with Tailwind CSS to maintain exact visual consistency and dark mode compatibility.
