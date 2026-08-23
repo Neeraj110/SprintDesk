@@ -51,9 +51,6 @@ const INITIAL_DEMO_TASKS: PreviewTask[] = [
 export const LandingPage: React.FC = () => {
   const navigate = useNavigate();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
-  const user = useAuthStore((s) => s.user);
-  const setTokens = useAuthStore((s) => s.setTokens);
-  const setUser = useAuthStore((s) => s.setUser);
   const { theme, toggleTheme } = useThemeStore();
 
   const [activeTab, setActiveTab] = useState<"kanban" | "analytics" | "security">("kanban");
@@ -69,13 +66,8 @@ export const LandingPage: React.FC = () => {
   };
 
   const handleQuickLogin = (username: "emilys" | "michaelw") => {
-    const mockUser = username === "emilys"
-      ? { id: 1, username: "emilys", firstName: "Emily", lastName: "Selman", email: "emily.selman@sprintdesk.io", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80" }
-      : { id: 2, username: "michaelw", firstName: "Michael", lastName: "Williams", email: "michael.williams@sprintdesk.io", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80" };
-
-    setTokens("demo_access_token_simulated", "demo_refresh_token_simulated");
-    setUser(mockUser);
-    navigate("/dashboard");
+    setActiveAccount(username);
+    navigate("/login");
   };
 
   const filteredTasks = demoTasks.filter((t) => {
