@@ -1,3 +1,5 @@
+import { mockDataClient } from "./httpClient";
+import fallbackMockData from "../../data/mock-data.json";
 import type { User, Sprint, Task, Comment, AppNotification } from "../../types";
 
 export interface RawMockData {
@@ -8,26 +10,17 @@ export interface RawMockData {
   notifications: AppNotification[];
 }
 
-import fallbackMockData from "../../data/mock-data.json";
 
 let cachedData: RawMockData | null = null;
 
 export const fetchInitialMockData = async (): Promise<RawMockData> => {
   if (cachedData) return cachedData;
   try {
-    const res = await fetch("/mock-data.json");
-    if (!res.ok) {
-      throw new Error(`Failed to fetch mock data: ${res.status} ${res.statusText}`);
-    }
-    const contentType = res.headers.get("content-type");
-    if (contentType && contentType.includes("text/html")) {
-      throw new Error("Received HTML response instead of JSON");
-    }
-    const data: RawMockData = await res.json();
+    const { data } = await mockDataClient.get<RawMockData>("/mock-data.json");
     cachedData = data;
-    return data;
+    return cachedData;
   } catch (err) {
-    console.warn("Network fetch for /mock-data.json failed or returned non-JSON. Using embedded static fallback data.", err);
+    console.warn("Network fetch for /mock-data.json failed. Using embedded static fallback data.", err);
     cachedData = fallbackMockData as RawMockData;
     return cachedData;
   }
@@ -45,7 +38,6 @@ export const getSprints = async (): Promise<Sprint[]> => {
 
 export const getTasks = async (): Promise<Task[]> => {
   const data = await fetchInitialMockData();
-  // Requirement 02: "Fetch the first 30 tasks from mock-data.json"
   return data.tasks.slice(0, 30);
 };
 

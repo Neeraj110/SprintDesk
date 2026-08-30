@@ -13,6 +13,10 @@ export const dummyJsonClient = axios.create({
 });
 
 
+export const mockDataClient = axios.create({
+  baseURL: "",
+});
+
 export const jsonPlaceholderClient = axios.create({
   baseURL: "https://jsonplaceholder.typicode.com",
 });
