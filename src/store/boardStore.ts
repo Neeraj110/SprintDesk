@@ -13,9 +13,8 @@ interface BoardState {
   sprints: Sprint[];
   isLoaded: boolean;
   filter: BoardFilter;
-  history: BoardHistoryItem[]; // History stack for Undo action bonus
+  history: BoardHistoryItem[];
   
-  // Actions
   setInitialData: (data: {
     tasks: Task[];
     comments: Comment[];

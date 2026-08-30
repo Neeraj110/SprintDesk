@@ -7,19 +7,16 @@ interface AuthState {
   user: User | null;
   refreshToken: string | null;
   isAuthenticated: boolean;
-  isInitializing: boolean; // full-screen loading while session is validated
+  isInitializing: boolean; 
   setTokens: (accessToken: string, refreshToken: string) => void;
   setUser: (user: User) => void;
   setInitializing: (value: boolean) => void;
   logout: () => void;
 }
-
-// NOTE: only the refreshToken + user are persisted. The accessToken stays
-// in-memory only (see httpClient.ts) per the assignment's requirement.
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
-      user: null,
+      user: null, 
       refreshToken: null,
       isAuthenticated: false,
       isInitializing: true,
@@ -39,8 +36,7 @@ export const useAuthStore = create<AuthState>()(
       },
     }),
     {
-      name: "sprintdesk-auth", // localStorage key — swap for the assignment's
-      // provided storage-simulation util here if one is supplied with mock-data.json
+      name: "sprintdesk-auth",
       partialize: (state) => ({
         refreshToken: state.refreshToken,
         user: state.user,

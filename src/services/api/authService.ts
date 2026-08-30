@@ -6,8 +6,6 @@ interface DummyJsonAuthResponse extends User {
   refreshToken: string;
 }
 
-// DummyJSON's default token expiry is short-lived; pass expiresInMins to
-// simulate quick expiry for testing the silent-refresh flow during dev.
 export const login = async (
   payload: LoginPayload
 ): Promise<DummyJsonAuthResponse> => {
@@ -16,7 +14,7 @@ export const login = async (
     {
       username: payload.username,
       password: payload.password,
-      expiresInMins: 1, // short expiry so refresh flow is easy to demo/test
+      expiresInMins: 1,
     }
   );
   return data;
